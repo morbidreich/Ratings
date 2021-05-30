@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/rating_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:margin="5dp"
+        android:paddingTop="10dp"
+        android:paddingbottom="5sp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="EPLB"
+
+        android:textSize="42dp" />
+
+    <RelativeLayout
+        android:id="@+id/layout_date_list_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/rating_name"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/layout_valid_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+
+            android:padding="8dp"
+
+            >
+
+            <TextView
+                android:id="@+id/text_valid_to"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="ważne do"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_valid_to"
+                android:text="21 09 2021"
+                android:textSize="34dp"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout_shift_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_toLeftOf="@id/layout_add_shift"
+            >
+            <TextView
+                android:id="@+id/text_shift_list"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="dyżury"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_shift_list"
+                android:src="@drawable/baseline_list_black_48"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout_add_shift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_alignParentEnd="true"
+
+            >
+            <TextView
+                android:id="@+id/add_shift"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="dodaj"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/add_shift"
+                android:src="@drawable/baseline_add_black_48"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>
