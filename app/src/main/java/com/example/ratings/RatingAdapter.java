@@ -18,11 +18,10 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class RatingAdapter extends ArrayAdapter<Rating> {
-    Context context;
+
 
     public RatingAdapter(@NonNull Context context, @NonNull ArrayList<Rating> objects) {
         super(context, 0, objects);
-        this.context = context;
     }
 
     @Nullable
@@ -41,25 +40,33 @@ public class RatingAdapter extends ArrayAdapter<Rating> {
 
         Rating currentRating = getItem(position);
 
+        /* bind view's items to data */
         TextView ratingNameTextView = (TextView)listItemView.findViewById(R.id.rating_name);
         ratingNameTextView.setText(currentRating.getRatingName());
 
         TextView ratingValidUntilTextView = (TextView)listItemView.findViewById(R.id.date_valid_to);
-        ratingValidUntilTextView.setText(currentRating.getValidUntil().toString());
+        ratingValidUntilTextView.setText(currentRating.getValidUntil());
 
+        /* event that opens activity displaying all recorded shifts for this rating */
         ImageView shiftListImageView = (ImageView) listItemView.findViewById(R.id.image_shift_list);
-
         shiftListImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Otwieram liste dyzurow", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(v.getContext(), ShiftListActivity.class);
+                v.getContext().startActivity(i);
             }
         });
 
-
+        /* event that opens activity for adding shifts for selected rating */
+        ImageView addShiftImageView = (ImageView) listItemView.findViewById(R.id.image_add_shift);
+        addShiftImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), AddShiftActivity.class);
+                v.getContext().startActivity(i);
+            }
+        });
 
         return listItemView;
-
-
     }
 }

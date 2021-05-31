@@ -1,5 +1,6 @@
 package com.example.ratings;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
