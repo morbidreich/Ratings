@@ -30,17 +30,13 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-
-
-        /* temporarily commented out for testing other layouts
-
         ArrayList<Rating> ratings = generateDummyRatings();
 
         RatingAdapter ratingAdapter = new RatingAdapter(this, ratings);
         ListView listView = (ListView)findViewById(R.id.ratings_list);
         listView.setAdapter(ratingAdapter);
 
-         */
+
 
     }
 
