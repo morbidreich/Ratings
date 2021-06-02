@@ -47,7 +47,7 @@ public class RatingAdapter extends ArrayAdapter<Rating> {
 
         /* display rating valid date, plus temporarily for testing number of shifts recorded for current rating */
         TextView ratingValidUntilTextView = (TextView)listItemView.findViewById(R.id.date_valid_to);
-        ratingValidUntilTextView.setText(currentRating.getValidUntil() + " " + currentRating.getShifts().size());
+        ratingValidUntilTextView.setText(currentRating.getValidUntil());
 
         /* event that opens activity displaying all recorded shifts for this rating */
         ImageView shiftListImageView = (ImageView) listItemView.findViewById(R.id.image_shift_list);
@@ -66,7 +66,9 @@ public class RatingAdapter extends ArrayAdapter<Rating> {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), AddShiftActivity.class);
+                i.putExtra("ratingName", currentRating.getRatingName());
                 v.getContext().startActivity(i);
+
             }
         });
 

@@ -19,7 +19,7 @@
             android:layout_alignParentTop="true"
             android:text="EPLB"
             android:textColor="@color/black"
-            android:textSize="36sp"
+            android:textSize="40dp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -52,7 +52,7 @@
                     android:layout_below="@id/text_valid_to"
                     android:textColor="@color/black"
                     android:text="21 09 2021"
-                    android:textSize="34dp" />
+                    android:textSize="40dp" />
             </RelativeLayout>
 
 
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="dyżury" />
+                    android:text="zapisane\ndyżury" />
 
                 <ImageView
                     android:id="@+id/image_shift_list"
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="dodaj" />
+                    android:text="dodaj\ndyżur" />
 
                 <ImageView
                     android:id="@+id/image_add_shift"

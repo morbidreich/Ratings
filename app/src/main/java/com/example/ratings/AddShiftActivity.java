@@ -2,32 +2,107 @@ package com.example.ratings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AddShiftActivity extends AppCompatActivity {
+
+    NumberPicker numDayPic;
+    NumberPicker numMonthPic;
+    NumberPicker numYearPic;
+    NumberPicker numHoursPic;
+
+    String ratingName;
+    Calendar cal = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_shift);
 
-        NumberPicker numPic = (NumberPicker)findViewById(R.id.day_number_picker);
-        numPic.setMaxValue(31);
-        numPic.setMinValue(1);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            ratingName = extras.getString("ratingName");
+        else ratingName = "";
 
 
+        // grab all numberpickers
+        numDayPic = (NumberPicker) findViewById(R.id.day_number_picker);
+        numMonthPic = (NumberPicker) findViewById(R.id.month_number_picker);
+        numYearPic = (NumberPicker) findViewById(R.id.year_number_picker);
+        numHoursPic = (NumberPicker) findViewById(R.id.hours_number_picker);
 
-        Button addButton = (Button) findViewById(R.id.button2);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        //set default values / to be changed for datepicker
+        numDayPic.setMaxValue(31);
+        numDayPic.setValue(cal.getTime().getDay());
+        numDayPic.setMinValue(1);
+
+        numMonthPic.setMaxValue(12);
+        numMonthPic.setValue(cal.getTime().getMonth()+1);
+        numMonthPic.setMinValue(1);
+
+        numYearPic.setMaxValue(2028);
+        numYearPic.setValue(cal.getTime().getYear()+1900);
+        numYearPic.setMinValue(2018);
+
+        numHoursPic.setMaxValue(10);
+        numHoursPic.setValue(4);
+        numHoursPic.setMinValue(1);
+
+
+        Button addButton = (Button) findViewById(R.id.button_add);
+        addButton.setOnClickListener(mClickListener);
+
+        Button backButton = (Button) findViewById(R.id.button_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MainActivity.class);
-                v.getContext().startActivity(i);
+                finish();
             }
         });
+
     }
+
+    View.OnClickListener mClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            //create candidate to add
+            Shift candidate = new Shift(numDayPic.getValue(), numMonthPic.getValue()-1, numYearPic.getValue() - 1900, numHoursPic.getValue());
+
+            boolean duplicate_found = false;
+
+
+            //check if candidate matches already saved shifts
+            for(Shift sh: Ratings.getRating(ratingName).getShifts()) {
+                //if duplicate found change variable value
+                if (sh.compareTo(candidate) == 0) {
+                   duplicate_found = true;
+                }
+            }
+
+            //if duplicate found then no go, and notify user
+            if (duplicate_found) {
+                Toast.makeText(AddShiftActivity.this, "Już dodałeś dyżur tego dnia!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            //if no duplicate found then add shift and notify user
+            else {
+                Toast.makeText(AddShiftActivity.this, "Dodano " + candidate.toString(), Toast.LENGTH_SHORT).show();
+                Ratings.getRating(ratingName).addShift(candidate);
+                finish();
+            }
+        }
+    };
 }
