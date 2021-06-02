@@ -28,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
         if no files, show screen allowing creating of ratings
 
         if files ok then display list of ratings
-
-
          */
 
         Ratings.setRatings(generateDummyRatings());
+
+        ArrayList<Rating> ratings = generateDummyRatings();
+
 
         RatingAdapter ratingAdapter = new RatingAdapter(this, Ratings.getRatingList());
         ListView listView = (ListView)findViewById(R.id.ratings_list);
