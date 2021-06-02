@@ -2,6 +2,7 @@ package com.example.ratings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,26 +22,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        View v = (View) findViewById(R.id.layout_rating_item);
-//        v.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "Event Works", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        // TODO
+        /* read ratings from file, use gson to parse object/string.
+
+        if no files, show screen allowing creating of ratings
+
+        if files ok then display list of ratings
 
 
+         */
 
+        Ratings.setRatings(generateDummyRatings());
 
-        /* temporarily commented out for testing other layouts
-
-        ArrayList<Rating> ratings = generateDummyRatings();
-
-        RatingAdapter ratingAdapter = new RatingAdapter(this, ratings);
+        RatingAdapter ratingAdapter = new RatingAdapter(this, Ratings.getRatingList());
         ListView listView = (ListView)findViewById(R.id.ratings_list);
         listView.setAdapter(ratingAdapter);
 
-         */
 
     }
 
@@ -59,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
         // drugi
         Rating r2 = new Rating("EPSY", 121,8,15);
 
-        r2.addShift(new Shift(23,5,121, 2.5));
-        r2.addShift(new Shift(24,5,121, 5));
-        r2.addShift(new Shift(25,5,121, 4.5));
-        r2.addShift(new Shift(26,5,121, 3));
+        r2.addShift(new Shift(23,2,121, 4));
+        r2.addShift(new Shift(4,2,121, 2));
+        r2.addShift(new Shift(15,2,121, 5.5));
+        r2.addShift(new Shift(26,2,121, 2));
+        r2.addShift(new Shift(11,5,121,4));
 
 
         ar.add(r1);
