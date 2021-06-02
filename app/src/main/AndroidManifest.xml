@@ -13,6 +13,7 @@
             android:name=".AddShiftActivity"
             android:label="Dodaj dyżur"/>
         <activity
+
             android:name=".ShiftListActivity"
             android:label="Lista dyżurów"/>
         <activity android:name=".MainActivity">
