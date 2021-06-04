@@ -23,6 +23,14 @@ public class Ratings {
         return ratingList;
     }
 
+    public static void addRating(String name) {
+        if (ratingList == null)
+            ratingList = new ArrayList<>();
+
+        Rating r = new Rating(name);
+        ratingList.add(r);
+    }
+
     /**
      * returns Rating with matching name param
      * @param name rating name
@@ -34,8 +42,6 @@ public class Ratings {
             if (name.equals(rat.toString()))
                 return rat;
         }
-
                return null;
-
     }
 }

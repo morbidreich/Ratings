@@ -1,4 +1,4 @@
-package com.example.ratings;
+package com.example.ratings.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.ratings.AddShiftActivity;
+import com.example.ratings.MainActivity;
+import com.example.ratings.R;
+import com.example.ratings.Rating;
+import com.example.ratings.ShiftListActivity;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -22,6 +28,7 @@ public class RatingAdapter extends ArrayAdapter<Rating> {
 
     public RatingAdapter(@NonNull Context context, @NonNull ArrayList<Rating> objects) {
         super(context, 0, objects);
+
     }
 
     @Nullable
@@ -48,6 +55,7 @@ public class RatingAdapter extends ArrayAdapter<Rating> {
         /* display rating valid date, plus temporarily for testing number of shifts recorded for current rating */
         TextView ratingValidUntilTextView = (TextView)listItemView.findViewById(R.id.date_valid_to);
         ratingValidUntilTextView.setText(currentRating.getValidUntil());
+
 
         /* event that opens activity displaying all recorded shifts for this rating */
         ImageView shiftListImageView = (ImageView) listItemView.findViewById(R.id.image_shift_list);

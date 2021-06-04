@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -95,13 +96,16 @@ public class AddShiftActivity extends AppCompatActivity {
             //if duplicate found then no go, and notify user
             if (duplicate_found) {
                 Toast.makeText(AddShiftActivity.this, "Już dodałeś dyżur tego dnia!", Toast.LENGTH_SHORT).show();
-                finish();
+                //finish();
             }
             //if no duplicate found then add shift and notify user
             else {
                 Toast.makeText(AddShiftActivity.this, "Dodano " + candidate.toString(), Toast.LENGTH_SHORT).show();
                 Ratings.getRating(ratingName).addShift(candidate);
-                finish();
+                Log.v("adding candidate ", candidate.toString());
+                Intent i = new Intent(v.getContext(), MainActivity.class);
+                startActivity(i);
+                //finish();
             }
         }
     };

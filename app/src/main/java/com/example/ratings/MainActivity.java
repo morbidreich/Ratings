@@ -1,26 +1,33 @@
 package com.example.ratings;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
-
+import com.example.ratings.adapters.RatingAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public final static String RATING_DATA = "ratings_data.txt";
+    private static boolean isInitialized = false;
+    private ListView listView;
+    RatingAdapter ratingAdapter;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ratingAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+            setContentView(R.layout.activity_main);
+
 
         // TODO
         /* read ratings from file, use gson to parse object/string.
@@ -30,14 +37,15 @@ public class MainActivity extends AppCompatActivity {
         if files ok then display list of ratings
          */
 
-        Ratings.setRatings(generateDummyRatings());
+        //Ratings.setRatings(generateDummyRatings());
 
-        ArrayList<Rating> ratings = generateDummyRatings();
+        //ArrayList<Rating> ratings = generateDummyRatings();
 
 
-        RatingAdapter ratingAdapter = new RatingAdapter(this, Ratings.getRatingList());
-        ListView listView = (ListView)findViewById(R.id.ratings_list);
+        ratingAdapter = new RatingAdapter(this, Ratings.getRatingList());
+        listView = (ListView)findViewById(R.id.ratings_list);
         listView.setAdapter(ratingAdapter);
+
 
 
     }
@@ -68,4 +76,6 @@ public class MainActivity extends AppCompatActivity {
         ar.add(r2);
         return ar;
     }
+
+
 }
