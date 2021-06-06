@@ -30,6 +30,9 @@ public class Ratings {
         Rating r = new Rating(name);
         ratingList.add(r);
     }
+    public static void addRating(Rating r) {
+        ratingList.add(r);
+    }
 
     /**
      * returns Rating with matching name param

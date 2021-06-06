@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".ShiftListActivity">
+
     <ListView
         android:id="@+id/shift_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@id/back_button"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
     <Button
         android:id="@+id/back_button"
         android:text="Wróć"

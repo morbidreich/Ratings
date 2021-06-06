@@ -21,20 +21,19 @@ public class ShiftListActivity extends AppCompatActivity {
 
         String ratingName = "";
 
+        //use extras to get rating name
+        //then use rating name to display its stored shifts
         Bundle extras = getIntent().getExtras();
         if (extras != null)
             ratingName = extras.getString("ratingName");
 
-        Toast.makeText(this, ratingName, Toast.LENGTH_SHORT).show();
-
-
+        //populate array with shifts specific for requested rating
         ArrayList<Shift> shiftList = Ratings.getRating(ratingName).getShifts();
 
         //set adapter for listview
         ShiftAdapter shiftAdapter = new ShiftAdapter(this, shiftList);
         ListView listView = (ListView) findViewById(R.id.shift_list);
         listView.setAdapter(shiftAdapter);
-
 
         // handle back button onClickListener - back to main activity
         Button backButton = (Button) findViewById(R.id.back_button);

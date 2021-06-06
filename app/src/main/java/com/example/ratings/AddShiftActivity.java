@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,10 +62,12 @@ public class AddShiftActivity extends AppCompatActivity {
         numHoursPic.setMinValue(1);
 
 
-        Button addButton = (Button) findViewById(R.id.button_add);
+
+
+        Button addButton = findViewById(R.id.button_add);
         addButton.setOnClickListener(mClickListener);
 
-        Button backButton = (Button) findViewById(R.id.button_back);
+        Button backButton = findViewById(R.id.button_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,9 +106,10 @@ public class AddShiftActivity extends AppCompatActivity {
                 Toast.makeText(AddShiftActivity.this, "Dodano " + candidate.toString(), Toast.LENGTH_SHORT).show();
                 Ratings.getRating(ratingName).addShift(candidate);
                 Log.v("adding candidate ", candidate.toString());
-                Intent i = new Intent(v.getContext(), MainActivity.class);
-                startActivity(i);
-                //finish();
+
+//                Intent i = new Intent(v.getContext(), MainActivity.class);
+//                startActivity(i);
+                finish();
             }
         }
     };

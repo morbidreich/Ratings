@@ -3,9 +3,13 @@ package com.example.ratings;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.ratings.adapters.RatingAdapter;
 import com.google.gson.Gson;
 
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,15 +23,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //update ListView containing Rating elements
         ratingAdapter.notifyDataSetChanged();
+    }
+
+    public RatingAdapter getRatingAdapter() {
+        return ratingAdapter;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-            setContentView(R.layout.activity_main);
-
+        //Ratings.setRatings(generateDummyRatings());
 
         // TODO
         /* read ratings from file, use gson to parse object/string.
@@ -37,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         if files ok then display list of ratings
          */
 
-        //Ratings.setRatings(generateDummyRatings());
+
+
+
 
         //ArrayList<Rating> ratings = generateDummyRatings();
 

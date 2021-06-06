@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
-import com.example.ratings.dataIO.dataIO;
+import com.example.ratings.dataIO.DataIO;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -19,15 +18,14 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
 
-        //Ratings.setRatings(dataIO.loadRatings(this));
+        //check for saved Rating files in apps internal storage
+        File myFiles = new File(this.getFilesDir().toString());
+        File[] list = myFiles.listFiles();
 
-        //if (Ratings.ratingList.size() == 0);
-            // open AddRatingAcvitity
-        //else;
-            // open MainActivity
 
-        Intent i = new Intent(this, AddRatingActivity.class);
-        startActivity(i);
-        finish();
+
+            Intent i = new Intent(this, AddRatingActivity.class);
+            startActivity(i);
+            finish();
     }
 }
