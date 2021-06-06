@@ -23,15 +23,34 @@ public class Ratings {
         return ratingList;
     }
 
-    public static void addRating(String name) {
+    /**
+     *
+     * @param name
+     * @throws Exception
+     */
+    public static void addRating(String name) throws Exception {
         if (ratingList == null)
             ratingList = new ArrayList<>();
+
+        // prevent adding ratings with duplicate names
+        for (Rating r: ratingList)
+            if (r.getRatingName().equals(name))
+                throw new Exception("Duplicate rating name detected");
 
         Rating r = new Rating(name);
         ratingList.add(r);
     }
-    public static void addRating(Rating r) {
-        ratingList.add(r);
+    public static void addRating(Rating rating) throws Exception {
+        for (Rating r: ratingList)
+            if (r.getRatingName().equals(rating.getRatingName()))
+                throw new Exception("Duplicate rating name detected");
+
+        ratingList.add(rating);
+    }
+
+    public static void removeRating(String ratingName) {
+        Rating r = getRating(ratingName);
+        ratingList.remove(r);
     }
 
     /**

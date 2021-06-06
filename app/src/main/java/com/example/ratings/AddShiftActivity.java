@@ -13,6 +13,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ratings.dataIO.DataIO;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -105,10 +107,8 @@ public class AddShiftActivity extends AppCompatActivity {
             else {
                 Toast.makeText(AddShiftActivity.this, "Dodano " + candidate.toString(), Toast.LENGTH_SHORT).show();
                 Ratings.getRating(ratingName).addShift(candidate);
-                Log.v("adding candidate ", candidate.toString());
-
-//                Intent i = new Intent(v.getContext(), MainActivity.class);
-//                startActivity(i);
+                DataIO.saveAllRatings(AddShiftActivity.this);
+//
                 finish();
             }
         }

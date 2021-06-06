@@ -13,11 +13,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.ratings.AddRatingActivity;
 import com.example.ratings.AddShiftActivity;
 import com.example.ratings.MainActivity;
 import com.example.ratings.R;
 import com.example.ratings.Rating;
+import com.example.ratings.Ratings;
 import com.example.ratings.ShiftListActivity;
+import com.example.ratings.dataIO.DataIO;
 
 import org.w3c.dom.Text;
 
@@ -76,9 +79,27 @@ public class RatingAdapter extends ArrayAdapter<Rating> {
                 Intent i = new Intent(v.getContext(), AddShiftActivity.class);
                 i.putExtra("ratingName", currentRating.getRatingName());
                 v.getContext().startActivity(i);
+            }
+        });
+
+        ImageView deleteRatingImageView = (ImageView) listItemView.findViewById(R.id.ic_delete_rating);
+        deleteRatingImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Skasowano " + currentRating.getRatingName(), Toast.LENGTH_SHORT).show();
+                Ratings.removeRating(currentRating.getRatingName());
+                DataIO.saveAllRatings(v.getContext());
+                notifyDataSetChanged();
+
+                //if no ratings are stored move user to create rating screen
+                if (Ratings.getRatingList().size() == 0) {
+                    Intent i = new Intent(v.getContext(), AddRatingActivity.class);
+                    v.getContext().startActivity(i);
+                }
 
             }
         });
+
 
         return listItemView;
     }

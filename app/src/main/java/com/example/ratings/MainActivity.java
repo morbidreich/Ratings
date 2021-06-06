@@ -1,7 +1,11 @@
 package com.example.ratings;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static boolean isInitialized = false;
     private ListView listView;
     RatingAdapter ratingAdapter;
+    Button addRatingButton;
 
 
     @Override
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        addRatingButton = (Button) findViewById(R.id.add_rating);
 
         //Ratings.setRatings(generateDummyRatings());
 
@@ -57,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
         ratingAdapter = new RatingAdapter(this, Ratings.getRatingList());
         listView = (ListView)findViewById(R.id.ratings_list);
         listView.setAdapter(ratingAdapter);
+
+        addRatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), AddRatingActivity.class);
+                startActivity(i);
+            }
+        });
 
 
 

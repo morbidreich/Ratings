@@ -22,4 +22,12 @@
         app:layout_constraintTop_toBottomOf="@id/serialization_with_gson"
         app:layout_constraintLeft_toLeftOf="parent"
         />
+    <Button
+        android:id="@+id/add_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dodaj uprawnienie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

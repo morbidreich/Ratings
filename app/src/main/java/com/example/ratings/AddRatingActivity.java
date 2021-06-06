@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ratings.dataIO.DataIO;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.BufferedReader;
@@ -44,11 +45,21 @@ public class AddRatingActivity extends AppCompatActivity {
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Ratings.addRating(editText.getText().toString());
 
-            Intent i = new Intent(v.getContext(), MainActivity.class);
-            startActivity(i);
-            finish();
+            String newRating = editText.getText().toString();
+
+            //try to add rating, exception will be thrown if rating with same name already exist
+            try {
+                Ratings.addRating(newRating);
+                DataIO.saveAllRatings(v.getContext());
+
+                Intent i = new Intent(v.getContext(), MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+            catch (Exception e) {
+                Toast.makeText(AddRatingActivity.this, "Nie mogę dodać drugiego uprawnienia o tej samej nazwie", Toast.LENGTH_SHORT).show();
+            }
 
 
         }
