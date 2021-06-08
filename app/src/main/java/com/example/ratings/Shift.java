@@ -17,6 +17,10 @@ public class Shift implements Comparable {
 
         mShiftDuration = duration;
     }
+    public Shift(Date date, double duration) {
+        mShiftDate = date;
+        mShiftDuration = duration;
+    }
 
     public Date getShiftDate() {
         return mShiftDate;

@@ -2,21 +2,21 @@ package com.example.ratings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ratings.dataIO.DataIO;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddShiftActivity extends AppCompatActivity {
 
@@ -27,6 +27,7 @@ public class AddShiftActivity extends AppCompatActivity {
 
     String ratingName;
     Calendar cal = Calendar.getInstance();
+    Date shiftDate = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,38 +40,54 @@ public class AddShiftActivity extends AppCompatActivity {
             ratingName = extras.getString("ratingName");
         else ratingName = "";
 
+        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Wybierz datę");
+        MaterialDatePicker datePicker = builder.build();
+        TextView datePreview = (TextView) findViewById(R.id.date_preview);
+
 
         // grab all numberpickers
-        numDayPic = (NumberPicker) findViewById(R.id.day_number_picker);
-        numMonthPic = (NumberPicker) findViewById(R.id.month_number_picker);
-        numYearPic = (NumberPicker) findViewById(R.id.year_number_picker);
+
         numHoursPic = (NumberPicker) findViewById(R.id.hours_number_picker);
 
         //set default values / to be changed for datepicker
-        numDayPic.setMaxValue(31);
-        numDayPic.setValue(cal.getTime().getDay());
-        numDayPic.setMinValue(1);
 
-        numMonthPic.setMaxValue(12);
-        numMonthPic.setValue(cal.getTime().getMonth()+1);
-        numMonthPic.setMinValue(1);
-
-        numYearPic.setMaxValue(2028);
-        numYearPic.setValue(cal.getTime().getYear()+1900);
-        numYearPic.setMinValue(2018);
-
-        numHoursPic.setMaxValue(10);
-        numHoursPic.setValue(4);
-        numHoursPic.setMinValue(1);
+        String[] durations = {"0,5", "1", "1,5", "2", "2,5", "3", "3,5", "4", "4,5", "5", "5,5", "6", "6,5", "7", "7,5", "8", "8,5", "9", "9,5", "10"};
 
 
+        numHoursPic.setMinValue(0);
+        numHoursPic.setMaxValue(19);
+
+        numHoursPic.setDisplayedValues(durations);
+
+        numHoursPic.setValue(7);
 
 
         Button addButton = findViewById(R.id.button_add);
         addButton.setOnClickListener(mClickListener);
 
-        Button backButton = findViewById(R.id.button_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        Button showDatePickerButton = findViewById(R.id.button_show_date_picker);
+        showDatePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePicker.show(getSupportFragmentManager(), "");
+            }
+        });
+
+        datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object object) {
+                Long x = (Long) object;
+                shiftDate = new Date(x);
+                //Toast.makeText(AddShiftActivity.this, shiftDate.toString(), Toast.LENGTH_SHORT).show();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                datePreview.setText(sdf.format(shiftDate));
+
+            }
+        });
+
+        MaterialButton mbCancel = (MaterialButton) findViewById(R.id.cancel_button2);
+        mbCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -79,22 +96,31 @@ public class AddShiftActivity extends AppCompatActivity {
 
     }
 
+
     View.OnClickListener mClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
 
             //create candidate to add
-            Shift candidate = new Shift(numDayPic.getValue(), numMonthPic.getValue()-1, numYearPic.getValue() - 1900, numHoursPic.getValue());
+            if (shiftDate == null) {
+                Toast.makeText(AddShiftActivity.this, "Wybierz datę!", Toast.LENGTH_SHORT).show();
+                return;
+
+            }
+
+            Shift candidatex = new Shift(shiftDate, (numHoursPic.getValue() * 0.5)+0.5);
+
+            //Shift candidate = new Shift(numDayPic.getValue(), numMonthPic.getValue()-1, numYearPic.getValue() - 1900, numHoursPic.getValue());
 
             boolean duplicate_found = false;
 
 
             //check if candidate matches already saved shifts
-            for(Shift sh: Ratings.getRating(ratingName).getShifts()) {
+            for (Shift sh : Ratings.getRating(ratingName).getShifts()) {
                 //if duplicate found change variable value
-                if (sh.compareTo(candidate) == 0) {
-                   duplicate_found = true;
+                if (sh.compareTo(candidatex) == 0) {
+                    duplicate_found = true;
                 }
             }
 
@@ -105,8 +131,8 @@ public class AddShiftActivity extends AppCompatActivity {
             }
             //if no duplicate found then add shift and notify user
             else {
-                Toast.makeText(AddShiftActivity.this, "Dodano " + candidate.toString(), Toast.LENGTH_SHORT).show();
-                Ratings.getRating(ratingName).addShift(candidate);
+                Toast.makeText(AddShiftActivity.this, "Dodano " + candidatex.toString(), Toast.LENGTH_SHORT).show();
+                Ratings.getRating(ratingName).addShift(candidatex);
                 DataIO.saveAllRatings(AddShiftActivity.this);
 //
                 finish();

@@ -27,12 +27,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:hint="podaj nazwę"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_rating_name"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

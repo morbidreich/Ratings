@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.BaseKeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,12 +46,12 @@ public class AddRatingActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.add_new_rating);
 
         //cancel button
-        MaterialButton cancelBUtton = (MaterialButton) findViewById(R.id.cancel_button);
+        MaterialButton cancelButton = (MaterialButton) findViewById(R.id.cancel_button);
 
         //textview for description for user
         TextView tvDescription = (TextView) findViewById(R.id.add_rating_description);
 
-        //modify TextView containing description based on check if user adds his first rating,
+        //modify TextView containing descripaction based on check if user adds his first rating,
         //or next. Description differ a bit
         if (Ratings.ratingList.size()==0)
             tvDescription.setText("Nie dodałeś jeszcze żadnych uprawnień.\nPodaj nazwę w polu poniżej by to zrobić");
@@ -55,6 +59,20 @@ public class AddRatingActivity extends AppCompatActivity {
             tvDescription.setText("Podaj nazwę uprawnienia w polu poniżej");
 
 
+        //goddamit finally
+        //this listener listens for done input on keyboard, when it occurs
+        //then it hides soft keyboard
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                   InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                   imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
 
@@ -62,12 +80,20 @@ public class AddRatingActivity extends AppCompatActivity {
         button.setOnClickListener(mOnClickListener);
 
         //handle cancel button click
-        cancelBUtton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    public void KeyboardClose() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     //listener for accept click
