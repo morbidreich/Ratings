@@ -41,12 +41,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="ratings_list"
-        tools:layout_editor_absoluteY="731dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
