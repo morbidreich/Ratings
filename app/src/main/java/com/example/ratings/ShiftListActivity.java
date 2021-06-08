@@ -31,7 +31,7 @@ public class ShiftListActivity extends AppCompatActivity {
         ArrayList<Shift> shiftList = Ratings.getRating(ratingName).getShifts();
 
         //set adapter for listview
-        ShiftAdapter shiftAdapter = new ShiftAdapter(this, shiftList);
+        ShiftAdapter shiftAdapter = new ShiftAdapter(this, shiftList, ratingName);
         ListView listView = (ListView) findViewById(R.id.shift_list);
         listView.setAdapter(shiftAdapter);
 

@@ -38,16 +38,19 @@ public class Rating {
     private Date ratingValidTo() {
         double totalWorkTime = 0;
 
-        for (int i = mShifts.size() - 1; i >= 0; i--) {
-            totalWorkTime += mShifts.get(i).getShiftDuration();
-            if (totalWorkTime >= 12) {
-                Calendar c = Calendar.getInstance();
-                c.setTime(mShifts.get(i).getShiftDate());
-                c.add(Calendar.DATE, 90);
-                return c.getTime();
+        if (mShifts.size() > 0) {
+            for (int i = mShifts.size() - 1; i >= 0; i--) {
+                totalWorkTime += mShifts.get(i).getShiftDuration();
+                if (totalWorkTime >= 12) {
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(mShifts.get(i).getShiftDate());
+                    c.add(Calendar.DATE, 90);
+                    return c.getTime();
+                }
             }
+            return mShifts.get(mShifts.size() - 1).getShiftDate();
         }
-        return mShifts.get(mShifts.size() -1).getShiftDate();
+        else return null;
     }
 
     @Override
@@ -83,5 +86,11 @@ public class Rating {
 
     public ArrayList<Shift> getShifts() {
         return mShifts;
+    }
+
+    public void deleteShift(Shift sh) {
+
+        mShifts.remove(sh);
+        mValidUntil = ratingValidTo();
     }
 }

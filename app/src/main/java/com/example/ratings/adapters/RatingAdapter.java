@@ -1,6 +1,8 @@
 package com.example.ratings.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,26 +10,21 @@ import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.ratings.AddRatingActivity;
 import com.example.ratings.AddShiftActivity;
-import com.example.ratings.MainActivity;
 import com.example.ratings.R;
 import com.example.ratings.Rating;
 import com.example.ratings.Ratings;
 import com.example.ratings.ShiftListActivity;
 import com.example.ratings.dataIO.DataIO;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class RatingAdapter extends ArrayAdapter<Rating> {
-
 
     public RatingAdapter(@NonNull Context context, @NonNull ArrayList<Rating> objects) {
         super(context, 0, objects);
@@ -86,20 +83,28 @@ public class RatingAdapter extends ArrayAdapter<Rating> {
         deleteRatingImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Skasowano " + currentRating.getRatingName(), Toast.LENGTH_SHORT).show();
-                Ratings.removeRating(currentRating.getRatingName());
-                DataIO.saveAllRatings(v.getContext());
-                notifyDataSetChanged();
 
-                //if no ratings are stored move user to create rating screen
-                if (Ratings.getRatingList().size() == 0) {
-                    Intent i = new Intent(v.getContext(), AddRatingActivity.class);
-                    v.getContext().startActivity(i);
-                }
+                AlertDialog.Builder adb = new AlertDialog.Builder(v.getContext());
+                adb.setTitle("Uwaga");
+                adb.setMessage("Czy na pewno usunąć " + currentRating.getRatingName() + "?");
+                final String ratingToRemove = currentRating.getRatingName();
+                adb.setNegativeButton("Nie", null);
+                adb.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Ratings.removeRating(ratingToRemove);
+                        DataIO.saveAllRatings(getContext());
+                        RatingAdapter.super.notifyDataSetChanged();
 
+                        if (Ratings.getRatingList().size() == 0) {
+                            Intent i = new Intent(v.getContext(), AddRatingActivity.class);
+                            v.getContext().startActivity(i);
+                        }
+                    }
+                });
+                adb.show();
             }
         });
-
 
         return listItemView;
     }

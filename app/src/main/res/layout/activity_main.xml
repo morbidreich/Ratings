@@ -9,25 +9,44 @@
     <TextView
         android:id="@+id/serialization_with_gson"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="JSON"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="30dp"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Twoje uprawnienia:"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/ratings_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/serialization_with_gson"
-        app:layout_constraintLeft_toLeftOf="parent"
-        />
+        android:layout_height="0dp"
+
+
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_rating"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/serialization_with_gson" />
+
     <Button
         android:id="@+id/add_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Dodaj uprawnienie"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="ratings_list"
+        tools:layout_editor_absoluteY="731dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

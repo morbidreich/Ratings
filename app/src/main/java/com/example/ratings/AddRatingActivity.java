@@ -39,7 +39,6 @@ public class AddRatingActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.add_new_rating);
 
         button.setOnClickListener(mOnClickListener);
-
     }
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -50,15 +49,19 @@ public class AddRatingActivity extends AppCompatActivity {
 
             //try to add rating, exception will be thrown if rating with same name already exist
             try {
-                Ratings.addRating(newRating);
-                DataIO.saveAllRatings(v.getContext());
+                if (!newRating.isEmpty()) {
+                    Ratings.addRating(newRating);
+                    DataIO.saveAllRatings(v.getContext());
 
-                Intent i = new Intent(v.getContext(), MainActivity.class);
-                startActivity(i);
-                finish();
+                    Intent i = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                else
+                    Toast.makeText(AddRatingActivity.this, "Musisz podać nazwę!", Toast.LENGTH_SHORT).show();
             }
             catch (Exception e) {
-                Toast.makeText(AddRatingActivity.this, "Nie mogę dodać drugiego uprawnienia o tej samej nazwie", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddRatingActivity.this, "Ta nazwa jest zajęta", Toast.LENGTH_SHORT).show();
             }
 
 

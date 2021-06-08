@@ -44,23 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
         addRatingButton = (Button) findViewById(R.id.add_rating);
 
-        //Ratings.setRatings(generateDummyRatings());
-
-        // TODO
-        /* read ratings from file, use gson to parse object/string.
-
-        if no files, show screen allowing creating of ratings
-
-        if files ok then display list of ratings
-         */
-
-
-
-
-
-        //ArrayList<Rating> ratings = generateDummyRatings();
-
-
         ratingAdapter = new RatingAdapter(this, Ratings.getRatingList());
         listView = (ListView)findViewById(R.id.ratings_list);
         listView.setAdapter(ratingAdapter);
@@ -72,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+
+
 
 
 
