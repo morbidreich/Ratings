@@ -19,6 +19,7 @@ import com.example.ratings.Ratings;
 import com.example.ratings.Shift;
 import com.example.ratings.dataIO.DataIO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,14 @@ public class ShiftAdapter extends ArrayAdapter<Shift> {
     ArrayList<Shift> mShifts;
     String ratingName = "";
 
-    public ShiftAdapter(@NonNull Context context, @NonNull ArrayList<Shift> objects, String ratingName) {
+    /**
+     * my constructor to initialize ShiftAdapter. String ratingName is needed for deleting shifts
+     * to know from which <code>Rating</code> we are deleting
+     * @param context
+     * @param objects list of shifts for given Rating
+     * @param ratingName name of Rating providing shift items
+     */
+    public ShiftAdapter(@NonNull Context context, @NonNull ArrayList<Shift> objects, @NonNull String ratingName) {
         super(context, 0, objects);
         mShifts = objects;
         this.ratingName = ratingName;
@@ -47,12 +55,16 @@ public class ShiftAdapter extends ArrayAdapter<Shift> {
         if (listViewItem == null)
             listViewItem = LayoutInflater.from(getContext()).inflate(R.layout.shift_item, parent, false);
 
+        //Shift item to be displayed in this view
         final Shift currentShift = getItem(position);
 
 
         TextView textViewShiftDate = (TextView) listViewItem.findViewById(R.id.shift_text);
-        if (currentShift != null)
-            textViewShiftDate.setText(currentShift.toString());
+        if (currentShift != null) {
+            //format date and display on screen
+            textViewShiftDate.setText(formatShiftDataToString(currentShift));
+
+        }
         else
             textViewShiftDate.setText("null");
 
@@ -79,8 +91,12 @@ public class ShiftAdapter extends ArrayAdapter<Shift> {
                 adb.show();
             }
         });
-
-
         return listViewItem;
+    }
+    //prepares shift data (day/month/year and shift duration) for displaying in list
+    private CharSequence formatShiftDataToString(Shift currentShift) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(currentShift.getShiftDate()) + "r, " + String.valueOf(currentShift.getShiftDuration() + "godz.");
     }
 }

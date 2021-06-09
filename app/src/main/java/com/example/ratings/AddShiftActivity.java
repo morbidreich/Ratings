@@ -2,6 +2,7 @@ package com.example.ratings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,7 @@ public class AddShiftActivity extends AppCompatActivity {
         builder.setTitleText("Wybierz datę");
         MaterialDatePicker datePicker = builder.build();
         TextView datePreview = (TextView) findViewById(R.id.date_preview);
+        datePicker.show(getSupportFragmentManager(), "");
 
 
         // grab all numberpickers
@@ -74,18 +76,28 @@ public class AddShiftActivity extends AppCompatActivity {
             }
         });
 
+        //when user selects date then initialize shiftDate to create Shift item later on
+        //also display selected date on datePreview TextView
         datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object object) {
                 Long x = (Long) object;
                 shiftDate = new Date(x);
-                //Toast.makeText(AddShiftActivity.this, shiftDate.toString(), Toast.LENGTH_SHORT).show();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 datePreview.setText(sdf.format(shiftDate));
 
             }
         });
+        //if user press cancel in DatePicker then finish AddShiftActivity
+        datePicker.addOnNegativeButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
 
+        });
+
+        //finish activity when user clicks cancel button
         MaterialButton mbCancel = (MaterialButton) findViewById(R.id.cancel_button2);
         mbCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,30 +108,29 @@ public class AddShiftActivity extends AppCompatActivity {
 
     }
 
-
+    //click listener for addButton
     View.OnClickListener mClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
 
-            //create candidate to add
+            //check if user selected date with DatePicker
             if (shiftDate == null) {
                 Toast.makeText(AddShiftActivity.this, "Wybierz datę!", Toast.LENGTH_SHORT).show();
                 return;
-
             }
 
-            Shift candidatex = new Shift(shiftDate, (numHoursPic.getValue() * 0.5)+0.5);
+            //create candidate to add with date selected in DatePicker and duration calculated
+            //based on NumberPicker selected value index.
 
-            //Shift candidate = new Shift(numDayPic.getValue(), numMonthPic.getValue()-1, numYearPic.getValue() - 1900, numHoursPic.getValue());
+            Shift candidate = new Shift(shiftDate, (numHoursPic.getValue() * 0.5) + 0.5);
 
             boolean duplicate_found = false;
 
-
             //check if candidate matches already saved shifts
             for (Shift sh : Ratings.getRating(ratingName).getShifts()) {
-                //if duplicate found change variable value
-                if (sh.compareTo(candidatex) == 0) {
+                //if duplicate found change boolean to true
+                if (sh.compareTo(candidate) == 0) {
                     duplicate_found = true;
                 }
             }
@@ -127,12 +138,12 @@ public class AddShiftActivity extends AppCompatActivity {
             //if duplicate found then no go, and notify user
             if (duplicate_found) {
                 Toast.makeText(AddShiftActivity.this, "Już dodałeś dyżur tego dnia!", Toast.LENGTH_SHORT).show();
-                //finish();
             }
+
             //if no duplicate found then add shift and notify user
             else {
-                Toast.makeText(AddShiftActivity.this, "Dodano " + candidatex.toString(), Toast.LENGTH_SHORT).show();
-                Ratings.getRating(ratingName).addShift(candidatex);
+                Toast.makeText(AddShiftActivity.this, "Dodano " + candidate.toString(), Toast.LENGTH_SHORT).show();
+                Ratings.getRating(ratingName).addShift(candidate);
                 DataIO.saveAllRatings(AddShiftActivity.this);
 //
                 finish();
