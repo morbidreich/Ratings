@@ -4,7 +4,11 @@
 
 The document entitling to work as an air traffic controller is called a license. License must contain at least one rating that specify position, that license holder is eligible to work at. One of the requirements for maintaining the validity of the rating is to work a certain number of hours in the position specified in the rating within a quarter. This may vary, but without going into much details current threshold is 12 hours of work each quarter.
 
+### Why
+
 I am holder of two ratings for airports in Lublin and Olsztyn. I found that difficult to keep track of it's validity especially during pandemic times, when your shifts get cancelled all the time and you spend really lot of your time off work. That's where I came up with the idea of this tracking app.
+
+### How
 
 *Ratings* is written in Java using Android Studio. Functionality is very basic, there are plenty of ideas and fields for improvement, but as I didn't find Android development much compelling, I stopped working on it.
 
